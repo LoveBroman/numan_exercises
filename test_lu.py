@@ -11,8 +11,14 @@ class TestLU(unittest.TestCase):
         b = np.random.rand(n)
         x = back_sub(A, b)
         x1 = np.linalg.solve(A, b)
-        print(x)
-        print(x1)
+        self.assertTrue(np.allclose(x, x1))
+
+    def test_forward_sub(self):
+        n = 5
+        A = np.tril(np.random.rand(n,n))
+        b = np.random.rand(n)
+        x = forward_sub(A, b)
+        x1 = np.linalg.solve(A, b)
         self.assertTrue(np.allclose(x, x1))
 
 

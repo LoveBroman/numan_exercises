@@ -7,12 +7,26 @@ def back_scalar(U, x, i):
 
 
 def back_sub(U, b):
+    assert U.shape[0] == U.shape[1] == len(b)
     x = np.zeros(len(U))
     for i, row in reversed(list(enumerate(U))):
         if i == len(U) - 1:
             x[i] = b[i] / U[i, i]
         else:
-            x[i] = (b[i] - back_scalar(U, x, i))/ U[i, i]
+            x[i] = (b[i] - back_scalar(U, x, i)) / U[i, i]
+    return x
+
+def forward_scalar(L, x, i):
+    return L[i, :i] @ x[:i]
+
+def forward_sub(L, b):
+    assert L.shape[0] == L.shape[1] == len(b)
+    x = np.zeros(len(L))
+    for i, row in enumerate(L):
+        if i == 0:
+            x[i] = b[i] / L[i, i]
+        else:
+            x[i] = (b[i] - forward_scalar(L, x, i)) / L[i, i]
     return x
 
 
