@@ -16,11 +16,12 @@ def back_sub(U, b):
     return x
 
 
-U = np.array([[1, 1],
+U = np.array([[1, 2],
               [0, 1]])
-b = np.array([0, 1])
+b = np.array([6, 5])
 x = back_sub(U, b)
-
+x2 = np.linalg.solve(U, b)
 
 
 print(x)
+print(x2)
