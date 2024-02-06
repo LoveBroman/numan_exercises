@@ -82,7 +82,6 @@ def PALU_factorize(A):
     for i, row in enumerate(A):
         for j, rowj in list(enumerate(A))[i + 1:]:
             fac = A[j, i] / A[i, i]
-            # A[j, i+1:] = A[j, i+1:] - fac * A[i, i+1:]
             A[j, i + 1:] -= fac * A[i, i + 1:]
             A[j, i] = fac
         if i < len(A) -1:
