@@ -44,7 +44,7 @@ class Interval:
             raise Exception(f"a = 0, can't divide by {self.a}!")
         elif other.b == 0:
             raise Exception(f"d = 0, can't divide by {other.b}!")
-        elif self.a/other.a >= (2^63 - 1) or self.a/other.b >= (2^63 - 1) or self.b/other.a >= (2^63 - 1) or self.b/other.b >= (2^63 - 1):
+        elif self.a/other.a >= (2**63 - 1) or self.a/other.b >= (2**63 - 1) or self.b/other.a >= (2^63 - 1) or self.b/other.b >= (2^63 - 1):
             raise Exception("Interval is infinately large, it does not have a finite limit")
         elif type(other) != Interval:
             return Interval(self.a/other,self.b/other)
