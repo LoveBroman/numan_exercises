@@ -29,19 +29,20 @@ def multi_apply(fs, values):
     return arr
 
 def err(r, x):
-    return sum((r-x) ** 2)
+    return (sum((r-x) ** 2)) ** .5
 
 def multi_variate_newton(fs, vars, x0, n=100, roots=None):
     x = x0
     for i in range(n):
         x_dict = dict(zip(vars, x))
         Da = jacobian(fs, vars, x_dict)
+        #Da = exact_jacobian(x_dict)
         inv_a = np.linalg.inv(Da)
         xnew = x - inv_a @ multi_apply(fs, x_dict)
         if roots is not None:
             ek = err(x, roots)
             ekp = err(xnew, roots)
-            print(f"Error after {i} iteration", ekp / ek)
+            print(f"Error after {i} iteration", ekp / (ek +1e-13))
         x = xnew
     x = dict(zip(vars, x))
     return x
@@ -52,7 +53,7 @@ def exact_jacobian(x_dict):
     x2 = x_dict["x2"]
     x3 = x_dict["x3"]
     n = len(x_dict)
-    jac = np.zeros((n,n), dtype="float64")
+    jac = np.zeros((n, n), dtype="float64")
     jac[0,:] = [2*(x1-2), 2*x2, -1]
     jac[1,:] = [x2 ** 2 -1, 2*x1*x2 + x3 - 3, x2]
     jac[2,:] = [x3**2 + x2, x3**2 + x1, 2*x3 * (x1 + x2) -3]
@@ -103,8 +104,8 @@ def f3(**kwargs):
 fs = [f1, f2, f3]
 vars = ["x1", "x2", "x3"]
 
-x100 = multi_variate_newton(fs, vars, np.arange(3) + 1, roots=np.ones(3))
-y100 = multi_variate_newton2(fs, vars, np.arange(3) + 1, roots=np.ones(3))
+x100 = multi_variate_newton(fs, vars, np.array([1, 2, 3]), roots=np.ones(3, dtype="float64"))
+y100 = multi_variate_newton2(fs, vars, np.array([1, 2, 3]), roots=np.ones(3, dtype="float64"))
 
 print(x100)
 print(y100)
