@@ -14,6 +14,10 @@ def least_squares(A, ys):
 def gendata(m):
     return ((np.arange(m)) / m) * 2 * np.pi - np.pi
 
+def gramschmidt(A):
+    for i in range(len(A)):
+
+
 
 
 # xs = np.array([
