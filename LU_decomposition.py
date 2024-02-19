@@ -3,7 +3,6 @@ import numpy as np
 
 # A helper function that given a specific index and a matrix gives a
 # The scalar product of all the elemnts to the right
-
 def back_scalar(U, x, i):
     return U[i, i + 1:] @ x[i + 1:]
 
@@ -89,18 +88,18 @@ def PALU_factorize(A):
     return A, P
 
 
-A = np.array([[3, 1, 2],
-             [6, 1, 3],
-             [6, 0, 1]], dtype="float64")
-
-b = np.array([1, 2, 3])
-
-LU, P = PALU_factorize(A)
-L = np.tril(LU, -1) + np.eye(len(A))
-U = np.triu(LU)
-print("P = \n", P)
-print("L = \n",L)
-print("U = \n", U)
-print(P.T @ L @ U)
+# A = np.array([[3, 1, 2],
+#              [6, 1, 3],
+#              [6, 0, 1]], dtype="float64")
+#
+# b = np.array([1, 2, 3])
+#
+# LU, P = PALU_factorize(A)
+# L = np.tril(LU, -1) + np.eye(len(A))
+# U = np.triu(LU)
+# print("P = \n", P)
+# print("L = \n",L)
+# print("U = \n", U)
+# print(P.T @ L @ U)
 
 
