@@ -1,4 +1,7 @@
 import numpy as np
+from LU_decomposition import back_sub
+
+
 def make_fun(fs, xs, fsize):
     A = np.zeros(fsize)
     for i in range(len(xs)):
@@ -6,34 +9,32 @@ def make_fun(fs, xs, fsize):
     return A
 
 
-
 def least_squares(A, ys):
-
     return np.linalg.inv(A.T @ A) @ A.T @ ys
+
 
 def gendata(m):
     return ((np.arange(m)) / m) * 2 * np.pi - np.pi
 
-def gramschmidt(A):
-    for i in range(len(A)):
+
+def gram_schmidt(A):
+    Q = np.zeros_like(A, dtype="float64")
+    Y = np.zeros_like(A, dtype="float64")
+
+    for i in range(A.shape[1]):
+        Y[:, i] = A[:, i].copy()
+        for j in range(0, i):
+            Y[:, i] = Y[:, i] - Q[:, j] * np.dot(Q[:, j], A[:, i])
+        Q[:, i] = Y[:, i] / np.linalg.norm(Y[:, i])
+    return Q
+
+def QR(A):
+    Q = gram_schmidt(A)
+    R = Q.T @ A
+    return Q, R
+def QR_leastSquares(A, y):
+    Q, R = QR(A)
+    return back_sub(R, Q.T @ y)
 
 
-
-
-# xs = np.array([
-#     [0, 1],
-#     [0, 1],
-#     [1, 0],
-#     [1, 0],
-#     [1, 2]])
-#
-# ys = np.array([3, 2, 3, 4, 6])
-# fs = lambda x: np.insert(x, 0, 1)
-#
-# print(np.linalg.inv(xs.T @ xs) @ xs.T @ ys)
-#
-# A = make_fun(fs, xs,(xs.shape[0], xs.shape[1] + 1))
-# t = least_squares(A, ys)
-#
-# print(t)
 
