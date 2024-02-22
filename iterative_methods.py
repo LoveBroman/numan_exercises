@@ -71,3 +71,18 @@ def iterate(A, b, x0, n=100, method='jacobi', w=1, tol=1e-14, showlen=None):
 # x = iterate(arr, b, x0, method="seidel", showlen=True)
 # print(x)
 # print(np.linalg.solve(arr, b))
+a = np.array([[3, -1],
+              [-1, 2]])
+x0 = np.array([1, 0])
+b = np.array([5, 4])
+print(iterate(a, b, x0, n=1))
+
+A = np.array([[1, -1, 1, -1],
+              [1, 1, 1, 1],
+              [1, 2, 4, 8],
+              [1, 3, 9, 27]])
+
+b= np.array([3, 1, 3, 7])
+print(np.linalg.det(A))
+print("solu ", np.linalg.solve(A, b))
+
